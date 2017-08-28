@@ -1,9 +1,12 @@
 package controllers
 
 import javax.inject._
+import scala.util.Properties
 import play.api._
 import play.api.mvc._
 import play.api.libs.json._
+
+import com.typesafe.config.ConfigFactory
 
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.SparkContext
@@ -12,10 +15,12 @@ import org.apache.spark.SparkConf
 @Singleton
 class DataController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
+  val master: String = Properties.envOrElse("SPARK_MASTER", ConfigFactory.load().getString("spark.master"))
+
   val conf = new SparkConf()
     .setJars(Array("target/scala-2.11/whiskey-tango_2.11-1.0-SNAPSHOT.jar"))
     .setAppName("City Aggregator")
-    .setMaster("spark://Zuse5:7077")
+    .setMaster(master)
   val sc = new SparkContext(conf)
 
   def cities(from: String, until: String, city: String) = Action { implicit request: Request[AnyContent] =>
