@@ -2,7 +2,7 @@
 Whiskey Tango
 
 ## Install
-Install `sbt` and run Apache Spark, then add the Spark master URL to the config file in `whiskey-tango/conf/application.conf` or export it as an environment variable:
+Install `sbt` and run Apache Spark 2.2.0, then add the Spark master URL to the config file in `whiskey-tango/conf/application.conf` or export it as an environment variable:
 ```
 $ export SPARK_MASTER="spark://<ip>:<port>"
 ```
